@@ -16,12 +16,12 @@ public interface PersonaRepository extends BaseRepository<Persona, Long> {
     boolean existsByDni(int dni);
 
     //Anotación JPQL parámetros indexados
-    @Query(value = "SELECT p FROM Persona p WHERE p.nombre LIKE '%?1%' OR p.apellido LIKE '%?1%'")
-    List<Persona> search(String filtro);
+    @Query(value = "SELECT p FROM Persona p WHERE p.nombre LIKE %:filtro% OR p.apellido LIKE %:filtro%")
+    List<Persona> search(@Param("filtro") String filtro);
 
     @Query(
-            value = "SELECT * FROM persona  WHERE persona.nombre LIKE '%?1%' OR persona.apellido LIKE '%?1%'",
+            value = "SELECT * FROM persona WHERE persona.nombre LIKE %:filtro% OR persona.apellido LIKE %:filtro%",
             nativeQuery = true
     )
-    List<Persona> search1(String filtro);
+    List<Persona> searchNativo(@Param("filtro") String filtro);
 }
